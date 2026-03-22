@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { toggleVariants } from '@/components/ui/toggle';
 import { cn } from '@/lib/shadcn/utils';
 
 const selectVariants = cva(
