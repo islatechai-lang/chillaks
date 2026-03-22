@@ -7,9 +7,11 @@ import {
   useLocalParticipant,
   useTracks,
   useVoiceAssistant,
+  useAgent,
 } from '@livekit/components-react';
 import { cn } from '@/lib/shadcn/utils';
 import { AudioVisualizer } from './audio-visualizer';
+import { RobotFace } from '@/components/agents-ui/robot-face';
 
 const ANIMATION_TRANSITION: MotionProps['transition'] = {
   type: 'spring',
@@ -24,7 +26,7 @@ const tileViewClassNames = {
   grid: [
     'h-full w-full',
     'grid gap-x-2 place-content-center',
-    'grid-cols-[1fr_1fr] grid-rows-[90px_1fr_90px]',
+    'grid-cols-1 grid-rows-[1fr]',
   ],
   // Agent
   // chatOpen: true,
@@ -92,7 +94,8 @@ export function TileLayout({
   audioVisualizerGridColumnCount,
   audioVisualizerWaveLineWidth,
 }: TileLayoutProps) {
-  const { videoTrack: agentVideoTrack } = useVoiceAssistant();
+  const { videoTrack: agentVideoTrack, audioTrack: agentAudioTrack } = useVoiceAssistant();
+  const { state: agentState } = useAgent();
   const [screenShareTrack] = useTracks([Track.Source.ScreenShare]);
   const cameraTrack: TrackReference | undefined = useLocalTrackRef(Track.Source.Camera);
 
@@ -106,9 +109,9 @@ export function TileLayout({
   const videoHeight = agentVideoTrack?.publication.dimensions?.height ?? 0;
 
   return (
-    <div className="absolute inset-x-0 top-8 bottom-32 z-50 md:top-12 md:bottom-40">
-      <div className="relative mx-auto h-full max-w-2xl px-4 md:px-0">
-        <div className={cn(tileViewClassNames.grid)}>
+    <div className="absolute inset-0 z-50 flex items-center justify-center p-4">
+      <div className="relative w-full h-full flex items-center justify-center max-w-lg md:max-w-2xl">
+        <div className={cn(tileViewClassNames.grid, "w-full")}>
           {/* Agent */}
           <div
             className={cn([
@@ -120,42 +123,21 @@ export function TileLayout({
           >
             <AnimatePresence mode="popLayout">
               {!isAvatar && (
-                // Audio Agent
+                // Audio Agent (Robot Face)
                 <motion.div
                   key="agent"
                   layoutId="agent"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{
                     ...ANIMATION_TRANSITION,
                     delay: animationDelay,
                   }}
-                  className={cn('relative aspect-square h-[90px]')}
+                  className={cn('relative w-full max-w-[400px] aspect-square')}
                 >
-                  <AudioVisualizer
-                    key="audio-visualizer"
-                    initial={{ scale: 1 }}
-                    animate={{ scale: chatOpen ? 0.2 : 1 }}
-                    transition={{
-                      ...ANIMATION_TRANSITION,
-                      delay: animationDelay,
-                    }}
-                    audioVisualizerType={audioVisualizerType}
-                    audioVisualizerColor={audioVisualizerColor}
-                    audioVisualizerColorShift={audioVisualizerColorShift}
-                    audioVisualizerBarCount={audioVisualizerBarCount}
-                    audioVisualizerRadialBarCount={audioVisualizerRadialBarCount}
-                    audioVisualizerRadialRadius={audioVisualizerRadialRadius}
-                    audioVisualizerGridRowCount={audioVisualizerGridRowCount}
-                    audioVisualizerGridColumnCount={audioVisualizerGridColumnCount}
-                    audioVisualizerWaveLineWidth={audioVisualizerWaveLineWidth}
-                    isChatOpen={chatOpen}
-                    className={cn(
-                      'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
-                      'bg-background rounded-[50px] border border-transparent transition-[border,drop-shadow]',
-                      chatOpen && 'border-input shadow-2xl/10 delay-200'
-                    )}
-                    style={{ color: audioVisualizerColor }}
+                  <RobotFace 
+                    state={agentState} 
+                    audioTrack={agentAudioTrack}
                   />
                 </motion.div>
               )}

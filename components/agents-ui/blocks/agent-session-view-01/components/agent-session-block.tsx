@@ -180,6 +180,7 @@ export function AgentSessionView_01({
   const [chatOpen, setChatOpen] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { state: agentState } = useAgent();
+  const [showControls, setShowControls] = useState(false);
 
   const controls: AgentControlBarControls = {
     leave: true,
@@ -201,9 +202,19 @@ export function AgentSessionView_01({
   return (
     <section
       ref={ref}
-      className={cn('bg-background relative z-10 h-full w-full overflow-hidden', className)}
+      className={cn('bg-linear-to-b from-zinc-950 to-black relative z-10 h-full w-full overflow-hidden', className)}
       {...props}
     >
+      <button
+        onClick={() => setShowControls(!showControls)}
+        className="absolute top-4 left-4 z-50 rounded-full bg-background/50 p-2 text-foreground backdrop-blur-md transition-all hover:bg-background h-10 w-10 flex items-center justify-center border border-border"
+        aria-label="Toggle controls"
+      >
+        <span className={cn("transition-transform duration-300", showControls ? "rotate-90" : "rotate-0")}>
+          {">"}
+        </span>
+      </button>
+
       <Fade top className="absolute inset-x-4 top-0 z-10 h-40" />
       {/* transcript */}
 
@@ -212,7 +223,7 @@ export function AgentSessionView_01({
           {chatOpen && (
             <motion.div
               {...CHAT_MOTION_PROPS}
-              className="flex h-full w-full flex-col gap-4 space-y-3 transition-opacity duration-300 ease-out"
+              className="flex h-full w-full flex-col gap-4 space-y-3 transition-opacity duration-300 ease-out pb-20 md:pb-0"
             >
               <AgentChatTranscript
                 agentState={agentState}
@@ -239,6 +250,7 @@ export function AgentSessionView_01({
       {/* Bottom */}
       <motion.div
         {...BOTTOM_VIEW_MOTION_PROPS}
+        animate={showControls ? "visible" : "hidden"}
         className="absolute inset-x-3 bottom-0 z-50 md:inset-x-12"
       >
         {/* Pre-connect message */}
@@ -257,7 +269,7 @@ export function AgentSessionView_01({
             )}
           </AnimatePresence>
         )}
-        <div className="bg-background relative mx-auto max-w-2xl pb-3 md:pb-12">
+        <div className="bg-background relative mx-auto max-w-2xl pb-3 md:pb-12 h-auto">
           <Fade bottom className="absolute inset-x-0 top-0 h-4 -translate-y-full" />
           <AgentControlBar
             variant="livekit"
