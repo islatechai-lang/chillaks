@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     const agentName = body?.agentName || body?.agent_name || process.env.AGENT_NAME;
 
     // Recreate the RoomConfiguration object from JSON object.
-    const roomConfig = body?.room_config
+    const roomConfig: RoomConfiguration = body?.room_config
       ? RoomConfiguration.fromJson(body.room_config, { ignoreUnknownFields: true })
       : new RoomConfiguration();
 
@@ -74,7 +74,7 @@ export async function POST(req: Request) {
 function createParticipantToken(
   userInfo: AccessTokenOptions,
   roomName: string,
-  roomConfig?: RoomConfiguration
+  roomConfig: RoomConfiguration
 ): Promise<string> {
   const at = new AccessToken(API_KEY, API_SECRET, {
     ...userInfo,
