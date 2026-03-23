@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { AccessToken, type AccessTokenOptions, type VideoGrant } from 'livekit-server-sdk';
-import { RoomConfiguration } from '@livekit/protocol';
+import { RoomConfiguration, RoomAgentDispatch } from '@livekit/protocol';
 
 type ConnectionDetails = {
   serverUrl: string;
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       : new RoomConfiguration();
 
     if (agentName) {
-      roomConfig.agents = [{ agentName: agentName }];
+      roomConfig.agents = [new RoomAgentDispatch({ agentName })];
     }
 
     // Generate participant token
