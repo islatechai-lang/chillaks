@@ -30,16 +30,23 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const agentName = body?.agentName || body?.agent_name || process.env.AGENT_NAME;
+    // Check if we should use explicit agent dispatch
+    const agentName = body?.agentName || body?.agent_name;
 
-    // Recreate the RoomConfiguration object from JSON object.
-    const roomConfig: RoomConfiguration = body?.room_config
-      ? RoomConfiguration.fromJson(body.room_config, { ignoreUnknownFields: true })
-      : new RoomConfiguration();
+    const roomConfig = new RoomConfiguration();
+    if (body?.room_config) {
+      // If we have room_config in body, use it as baseline
+      const json = typeof body.room_config === 'string' ? JSON.parse(body.room_config) : body.room_config;
+      Object.assign(roomConfig, RoomConfiguration.fromJson(json));
+    }
 
     if (agentName) {
-      roomConfig.agents = [new RoomAgentDispatch({ agentName })];
+      roomConfig.agents = [new RoomAgentDispatch({ agentName: agentName })];
     }
+
+    // If roomConfig has no agents, we should probably not send it at all
+    // to allow for default automatic dispatching
+    const finalRoomConfig = roomConfig.agents.length > 0 ? roomConfig : undefined;
 
     // Generate participant token
     const participantName = 'user';
@@ -49,7 +56,7 @@ export async function POST(req: Request) {
     const participantToken = await createParticipantToken(
       { identity: participantIdentity, name: participantName },
       roomName,
-      roomConfig
+      finalRoomConfig
     );
 
     // Return connection details
@@ -74,7 +81,7 @@ export async function POST(req: Request) {
 function createParticipantToken(
   userInfo: AccessTokenOptions,
   roomName: string,
-  roomConfig: RoomConfiguration
+  roomConfig?: RoomConfiguration
 ): Promise<string> {
   const at = new AccessToken(API_KEY, API_SECRET, {
     ...userInfo,
