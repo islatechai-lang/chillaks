@@ -44,7 +44,7 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.2]",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.5] -translate-y-[5%]",
             isSpeaking ? "opacity-0" : "opacity-100"
         )}
       />
@@ -58,21 +58,21 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.2]",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.5] -translate-y-[5%]",
             isSpeaking ? "opacity-100" : "opacity-0"
         )}
       />
       
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        {/* Step: ADJUST POSITION HERE -> Change the mt-[43%] to move it up or down */}
-        <div className="mt-[43%] flex items-center justify-center w-80 h-40 pointer-events-none">
+        {/* Step: ADJUST POSITION HERE -> Change the mt-[40%] to move it up or down */}
+        <div className="mt-[40%] flex items-center justify-center w-80 h-40 pointer-events-none">
             {/* SVG Mouth for perfect Eye Shape control */}
             <svg 
               viewBox="0 0 100 100" 
               className={cn(
-                "w-full h-full drop-shadow-[0_0_15px_rgba(34,211,238,0.6)] transition-opacity",
-                state === 'listening' ? "opacity-30" : "opacity-100"
+                "w-full h-full drop-shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-all duration-300",
+                isSpeaking ? "opacity-40" : "opacity-0" // SHOW ONLY WHEN TALKING, low opacity
               )}
             >
               <defs>
@@ -83,18 +83,18 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
                 </linearGradient>
               </defs>
               <path
-                // M 10,50 (Left Point)
-                // Q 50, (50 - openingH) 90,50 (Top Curve to Right Point)
-                // Q 50, (50 + openingH) 10,50 (Bottom Curve back to Left Point)
+                // M 15,50 (Left Point)
+                // Q 50, (50 - openingH) 85,50 (Top Curve to Right Point)
+                // Q 50, (50 + openingH) 15,50 (Bottom Curve back to Left Point)
                 d={`
                   M 15 50 
-                  Q 50 ${isSpeaking ? 50 - (2 + volume * 25) : 48} 85 50 
-                  Q 50 ${isSpeaking ? 50 + (2 + volume * 25) : 52} 15 50 
+                  Q 50 ${isSpeaking ? 50 - (1 + volume * 20) : 49} 85 50 
+                  Q 50 ${isSpeaking ? 50 + (1 + volume * 20) : 51} 15 50 
                   Z
                 `}
                 fill="black"
                 stroke="url(#mouthGradient)"
-                strokeWidth="1"
+                strokeWidth="0.8"
                 strokeLinecap="round"
                 style={{ transition: 'd 0.05s ease-out' }}
               />
