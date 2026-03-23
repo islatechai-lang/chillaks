@@ -89,8 +89,8 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
               // Q 50, (50 + openingH) 0,50 (Bottom Curve back to Left Point)
               d={`
                   M 0 50 
-                  Q 50 ${isSpeaking ? 50 - (1 + volume * 45) : 49} 100 50 
-                  Q 50 ${isSpeaking ? 50 + (1 + volume * 45) : 51} 0 50 
+                  Q 50 ${isSpeaking ? 50 - (volume * 75) : 49.5} 100 50 
+                  Q 50 ${isSpeaking ? 50 + (volume * 75) : 50.5} 0 50 
                   Z
                 `}
               fill="black"
