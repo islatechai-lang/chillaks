@@ -65,8 +65,8 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
       
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        {/* Step: ADJUST POSITION HERE -> Change the mt-[42%] to move it up or down */}
-        <div className="mt-[42%] flex items-center justify-center w-80 h-40 pointer-events-none">
+        {/* Step: ADJUST POSITION HERE -> Change the mt-[44%] to move it up or down */}
+        <div className="mt-[44%] flex items-center justify-center w-[400px] h-40 pointer-events-none">
             {/* SVG Mouth for perfect Eye Shape control */}
             <svg 
               viewBox="0 0 100 100" 
