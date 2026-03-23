@@ -133,7 +133,7 @@ export function TileLayout({
                     ...ANIMATION_TRANSITION,
                     delay: animationDelay,
                   }}
-                  className={cn('relative w-full aspect-square flex items-center justify-center')}
+                  className={cn('relative w-full h-full flex items-center justify-center')}
                 >
                   <RobotFace 
                     state={agentState} 
