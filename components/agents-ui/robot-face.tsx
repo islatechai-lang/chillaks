@@ -13,14 +13,14 @@ interface RobotFaceProps {
 export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
   const idleVideoRef = useRef<HTMLVideoElement>(null);
   const talkingVideoRef = useRef<HTMLVideoElement>(null);
-  
+
   // Get audio volume for mouth animation
   const volumeBands = useMultibandTrackVolume(audioTrack, {
     bands: 1,
     loPass: 100,
     hiPass: 300,
   });
-  
+
   const volume = volumeBands[0] || 0;
   const isSpeaking = state === 'speaking';
 
@@ -44,8 +44,8 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%] -translate-x-[1px]",
-            isSpeaking ? "opacity-0" : "opacity-100"
+          "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%] -translate-x-[1px]",
+          isSpeaking ? "opacity-0" : "opacity-100"
         )}
       />
 
@@ -58,50 +58,50 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%] -translate-x-[1px]",
-            isSpeaking ? "opacity-100" : "opacity-0"
+          "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%] -translate-x-[1px]",
+          isSpeaking ? "opacity-100" : "opacity-0"
         )}
       />
-      
+
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
         {/* Step: ADJUST POSITION HERE -> Change the mt-[44%] to move it up or down */}
-        <div className="mt-[44%] flex items-center justify-center w-[400px] h-40 pointer-events-none">
-            {/* SVG Mouth for perfect Eye Shape control */}
-            <svg 
-              viewBox="0 0 100 100" 
-              className={cn(
-                "w-full h-full drop-shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-all duration-300",
-                isSpeaking ? "opacity-40" : "opacity-0" // SHOW ONLY WHEN TALKING, low opacity
-              )}
-            >
-              <defs>
-                <linearGradient id="mouthGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.8" />
-                  <stop offset="50%" stopColor="#22d3ee" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.8" />
-                </linearGradient>
-              </defs>
-              <path
-                // M 5,50 (Left Point) - Expanded from 15 for double width
-                // Q 50, (50 - openingH) 95,50 (Top Curve to Right Point)
-                // Q 50, (50 + openingH) 5,50 (Bottom Curve back to Left Point)
-                d={`
+        <div className="mt-[47%] flex items-center justify-center w-[450px] h-40 pointer-events-none">
+          {/* SVG Mouth for perfect Eye Shape control */}
+          <svg
+            viewBox="0 0 100 100"
+            className={cn(
+              "w-full h-full drop-shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-all duration-300",
+              isSpeaking ? "opacity-40" : "opacity-0" // SHOW ONLY WHEN TALKING, low opacity
+            )}
+          >
+            <defs>
+              <linearGradient id="mouthGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="#22d3ee" stopOpacity="1" />
+                <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.8" />
+              </linearGradient>
+            </defs>
+            <path
+              // M 5,50 (Left Point) - Expanded from 15 for double width
+              // Q 50, (50 - openingH) 95,50 (Top Curve to Right Point)
+              // Q 50, (50 + openingH) 5,50 (Bottom Curve back to Left Point)
+              d={`
                   M 5 50 
                   Q 50 ${isSpeaking ? 50 - (1 + volume * 20) : 49} 95 50 
                   Q 50 ${isSpeaking ? 50 + (1 + volume * 20) : 51} 5 50 
                   Z
                 `}
-                fill="black"
-                stroke="url(#mouthGradient)"
-                strokeWidth="0.8"
-                strokeLinecap="round"
-                style={{ transition: 'd 0.05s ease-out' }}
-              />
-            </svg>
+              fill="black"
+              stroke="url(#mouthGradient)"
+              strokeWidth="0.8"
+              strokeLinecap="round"
+              style={{ transition: 'd 0.05s ease-out' }}
+            />
+          </svg>
         </div>
       </div>
-      
+
       {/* Decorative Glow */}
       <div className="absolute inset-0 pointer-events-none bg-radial-[circle_at_50%_50%] from-cyan-500/5 to-transparent" />
     </div>
