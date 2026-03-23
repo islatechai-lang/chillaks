@@ -66,7 +66,7 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
         {/* Step: ADJUST POSITION HERE -> Change the mt-[44%] to move it up or down */}
-        <div className="mt-[54%] flex items-center justify-center w-[520px] h-40 pointer-events-none">
+        <div className="mt-[55%] flex items-center justify-center w-[520px] h-40 pointer-events-none">
           {/* SVG Mouth for perfect Eye Shape control */}
           <svg
             viewBox="0 0 100 100"
@@ -83,13 +83,13 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
               </linearGradient>
             </defs>
             <path
-              // M 5,50 (Left Point) - Expanded from 15 for double width
-              // Q 50, (50 - openingH) 95,50 (Top Curve to Right Point)
-              // Q 50, (50 + openingH) 5,50 (Bottom Curve back to Left Point)
+              // M 0,50 (Left Point) - Full width
+              // Q 50, (50 - openingH) 100,50 (Top Curve to Right Point)
+              // Q 50, (50 + openingH) 0,50 (Bottom Curve back to Left Point)
               d={`
-                  M 5 50 
-                  Q 50 ${isSpeaking ? 50 - (1 + volume * 20) : 49} 95 50 
-                  Q 50 ${isSpeaking ? 50 + (1 + volume * 20) : 51} 5 50 
+                  M 0 50 
+                  Q 50 ${isSpeaking ? 50 - (1 + volume * 45) : 49} 100 50 
+                  Q 50 ${isSpeaking ? 50 + (1 + volume * 45) : 51} 0 50 
                   Z
                 `}
               fill="black"
