@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       : new RoomConfiguration();
 
     if (agentName) {
-      roomConfig.agents = [{ name: agentName }];
+      roomConfig.agents = [{ agentName: agentName }];
     }
 
     // Generate participant token
