@@ -66,20 +66,39 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
         {/* Step: ADJUST POSITION HERE -> Change the mt-[42%] to move it up or down */}
-        <div className="mt-[42%] flex items-center justify-center w-60 h-20">
-            {/* The "Mouth" with pointy sides and black interior */}
-            <div 
-                className="bg-black border border-cyan-400/80 transition-all duration-75 ease-out shadow-[0_0_20px_rgba(34,211,238,0.4)] flex items-center justify-center overflow-hidden"
-                style={{ 
-                    width: isSpeaking ? `${30 + volume * 20}%` : '25%', // Keep it small and balanced
-                    height: isSpeaking ? `${3 + volume * 25}px` : '2px',
-                    borderRadius: '100% 5% / 100% 5%', // Pointy sides eye/lip shape
-                    opacity: state === 'listening' ? 0.3 : 1
-                }}
+        <div className="mt-[44%] flex items-center justify-center w-80 h-40 pointer-events-none">
+            {/* SVG Mouth for perfect Eye Shape control */}
+            <svg 
+              viewBox="0 0 100 100" 
+              className={cn(
+                "w-full h-full drop-shadow-[0_0_15px_rgba(34,211,238,0.6)] transition-opacity",
+                state === 'listening' ? "opacity-30" : "opacity-100"
+              )}
             >
-                {/* Subtle interior glow line */}
-                <div className="w-full h-[1px] bg-cyan-400/40 shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
-            </div>
+              <defs>
+                <linearGradient id="mouthGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.8" />
+                  <stop offset="50%" stopColor="#22d3ee" stopOpacity="1" />
+                  <stop offset="100%" stopColor="#22d3ee" stopOpacity="0.8" />
+                </linearGradient>
+              </defs>
+              <path
+                // M 10,50 (Left Point)
+                // Q 50, (50 - openingH) 90,50 (Top Curve to Right Point)
+                // Q 50, (50 + openingH) 10,50 (Bottom Curve back to Left Point)
+                d={`
+                  M 15 50 
+                  Q 50 ${isSpeaking ? 50 - (2 + volume * 25) : 48} 85 50 
+                  Q 50 ${isSpeaking ? 50 + (2 + volume * 25) : 52} 15 50 
+                  Z
+                `}
+                fill="black"
+                stroke="url(#mouthGradient)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                style={{ transition: 'd 0.05s ease-out' }}
+              />
+            </svg>
         </div>
       </div>
       
