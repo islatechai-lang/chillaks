@@ -66,13 +66,13 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
         {/* Step: ADJUST POSITION HERE -> Change the mt-[44%] to move it up or down */}
-        <div className="mt-[55%] flex items-center justify-center w-[520px] h-40 pointer-events-none">
+        <div className="mt-[55%] flex items-center justify-center w-[650px] h-40 pointer-events-none">
           {/* SVG Mouth for perfect Eye Shape control */}
           <svg
             viewBox="0 0 100 100"
             className={cn(
-              "w-full h-full drop-shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-all duration-300",
-              isSpeaking ? "opacity-40" : "opacity-0" // SHOW ONLY WHEN TALKING, low opacity
+              "w-full h-full drop-shadow-[0_0_20px_rgba(34,211,238,0.5)] transition-all duration-300",
+              isSpeaking ? "opacity-100" : "opacity-0" 
             )}
           >
             <defs>
@@ -93,8 +93,9 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
                   Z
                 `}
               fill="black"
+              fillOpacity="1"
               stroke="url(#mouthGradient)"
-              strokeWidth="0.8"
+              strokeWidth="1"
               strokeLinecap="round"
               style={{ transition: 'd 0.05s ease-out' }}
             />
