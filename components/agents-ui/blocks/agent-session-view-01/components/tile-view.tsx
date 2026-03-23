@@ -186,49 +186,47 @@ export function TileLayout({
             </AnimatePresence>
           </div>
 
-          <div
-            className={cn([
-              'grid',
-              chatOpen && tileViewClassNames.secondTileChatOpen,
-              !chatOpen && tileViewClassNames.secondTileChatClosed,
-            ])}
-          >
-            {/* Camera & Screen Share */}
-            <AnimatePresence>
-              {((cameraTrack && isCameraEnabled) || (screenShareTrack && isScreenShareEnabled)) && (
-                <motion.div
-                  key="camera"
-                  layout="position"
-                  layoutId="camera"
-                  initial={{
-                    opacity: 0,
-                    scale: 0,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0,
-                  }}
-                  transition={{
-                    ...ANIMATION_TRANSITION,
-                    delay: animationDelay,
-                  }}
-                  className="aspect-square size-[90px] drop-shadow-lg/20"
-                >
-                  <VideoTrack
-                    trackRef={cameraTrack || screenShareTrack}
-                    width={(cameraTrack || screenShareTrack)?.publication.dimensions?.width ?? 0}
-                    height={(cameraTrack || screenShareTrack)?.publication.dimensions?.height ?? 0}
-                    className="bg-muted aspect-square size-[90px] rounded-md object-cover"
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
         </div>
+      </div>
+
+      {/* Camera & Screen Share - Floating Bottom Right */}
+      <div className="absolute bottom-[110px] right-4 md:bottom-12 md:right-8 z-[100] pointer-events-auto">
+        <AnimatePresence>
+          {((cameraTrack && isCameraEnabled) || (screenShareTrack && isScreenShareEnabled)) && (
+            <motion.div
+              key="camera"
+              layout="position"
+              layoutId="camera"
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+                y: 20,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.8,
+                y: 20,
+              }}
+              transition={{
+                ...ANIMATION_TRANSITION,
+                damping: 20,
+              }}
+              className="drop-shadow-2xl overflow-hidden rounded-xl border border-white/20 bg-black/50 backdrop-blur-md"
+            >
+              <VideoTrack
+                trackRef={cameraTrack || screenShareTrack}
+                width={(cameraTrack || screenShareTrack)?.publication.dimensions?.width ?? 0}
+                height={(cameraTrack || screenShareTrack)?.publication.dimensions?.height ?? 0}
+                className="bg-muted w-[200px] md:w-[320px] aspect-video object-cover"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
