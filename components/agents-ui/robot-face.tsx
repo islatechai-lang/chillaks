@@ -44,7 +44,7 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.2]",
             isSpeaking ? "opacity-0" : "opacity-100"
         )}
       />
@@ -58,15 +58,15 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.2]",
             isSpeaking ? "opacity-100" : "opacity-0"
         )}
       />
       
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        {/* Step: ADJUST POSITION HERE -> Change the mt-[42%] to move it up or down */}
-        <div className="mt-[44%] flex items-center justify-center w-80 h-40 pointer-events-none">
+        {/* Step: ADJUST POSITION HERE -> Change the mt-[43%] to move it up or down */}
+        <div className="mt-[43%] flex items-center justify-center w-80 h-40 pointer-events-none">
             {/* SVG Mouth for perfect Eye Shape control */}
             <svg 
               viewBox="0 0 100 100" 
@@ -94,7 +94,7 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
                 `}
                 fill="black"
                 stroke="url(#mouthGradient)"
-                strokeWidth="2"
+                strokeWidth="1"
                 strokeLinecap="round"
                 style={{ transition: 'd 0.05s ease-out' }}
               />
