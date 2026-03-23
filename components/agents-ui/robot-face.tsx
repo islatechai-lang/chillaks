@@ -65,15 +65,15 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
       
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        {/* Mouth Container - Adjusted position to align with video mouth */}
-        <div className="mt-[32%] flex items-center justify-center w-60 h-20">
-            {/* The "Mouth" with pointy sides and semi-transparent interior */}
+        {/* Step: ADJUST POSITION HERE -> Change the mt-[42%] to move it up or down */}
+        <div className="mt-[42%] flex items-center justify-center w-60 h-20">
+            {/* The "Mouth" with pointy sides and black interior */}
             <div 
-                className="bg-cyan-500/10 border-2 border-cyan-400/80 transition-all duration-75 ease-out shadow-[0_0_25px_rgba(34,211,238,0.4)] flex items-center justify-center overflow-hidden"
+                className="bg-black border border-cyan-400/80 transition-all duration-75 ease-out shadow-[0_0_20px_rgba(34,211,238,0.4)] flex items-center justify-center overflow-hidden"
                 style={{ 
-                    width: isSpeaking ? `${50 + volume * 50}%` : '45%',
-                    height: isSpeaking ? `${8 + volume * 60}px` : '4px',
-                    borderRadius: '50% / 100%', // Pointy sides landscape oval effect
+                    width: isSpeaking ? `${30 + volume * 20}%` : '25%', // Keep it small and balanced
+                    height: isSpeaking ? `${3 + volume * 25}px` : '2px',
+                    borderRadius: '100% 5% / 100% 5%', // Pointy sides eye/lip shape
                     opacity: state === 'listening' ? 0.3 : 1
                 }}
             >
