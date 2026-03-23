@@ -44,7 +44,7 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%]",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%] -translate-x-[1px]",
             isSpeaking ? "opacity-0" : "opacity-100"
         )}
       />
@@ -58,15 +58,15 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
         muted
         playsInline
         className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%]",
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500 scale-[1.3] -translate-y-[5%] -translate-x-[1px]",
             isSpeaking ? "opacity-100" : "opacity-0"
         )}
       />
       
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        {/* Step: ADJUST POSITION HERE -> Change the mt-[41%] to move it up or down */}
-        <div className="mt-[41%] flex items-center justify-center w-80 h-40 pointer-events-none">
+        {/* Step: ADJUST POSITION HERE -> Change the mt-[42%] to move it up or down */}
+        <div className="mt-[42%] flex items-center justify-center w-80 h-40 pointer-events-none">
             {/* SVG Mouth for perfect Eye Shape control */}
             <svg 
               viewBox="0 0 100 100" 
@@ -83,13 +83,13 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
                 </linearGradient>
               </defs>
               <path
-                // M 15,50 (Left Point)
-                // Q 50, (50 - openingH) 85,50 (Top Curve to Right Point)
-                // Q 50, (50 + openingH) 15,50 (Bottom Curve back to Left Point)
+                // M 5,50 (Left Point) - Expanded from 15 for double width
+                // Q 50, (50 - openingH) 95,50 (Top Curve to Right Point)
+                // Q 50, (50 + openingH) 5,50 (Bottom Curve back to Left Point)
                 d={`
-                  M 15 50 
-                  Q 50 ${isSpeaking ? 50 - (1 + volume * 20) : 49} 85 50 
-                  Q 50 ${isSpeaking ? 50 + (1 + volume * 20) : 51} 15 50 
+                  M 5 50 
+                  Q 50 ${isSpeaking ? 50 - (1 + volume * 20) : 49} 95 50 
+                  Q 50 ${isSpeaking ? 50 + (1 + volume * 20) : 51} 5 50 
                   Z
                 `}
                 fill="black"
