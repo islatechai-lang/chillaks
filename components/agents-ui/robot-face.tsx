@@ -67,9 +67,10 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
         {/* Step: ADJUST POSITION HERE -> Change the mt-[44%] to move it up or down */}
         <div className="mt-[55%] flex items-center justify-center w-[650px] h-40 pointer-events-none translate-x-[1px]">
-          {/* SVG Mouth for perfect Eye Shape control */}
+          {/* SVG Mouth for perfect Eye Shape control - Unlocked Aspect Ratio */}
           <svg
             viewBox="0 0 100 100"
+            preserveAspectRatio="none"
             className={cn(
               "w-full h-full drop-shadow-[0_0_20px_rgba(34,211,238,0.5)] transition-all duration-300",
               isSpeaking ? "opacity-100" : "opacity-0" 
@@ -93,7 +94,7 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
                   Z
                 `}
               fill="black"
-              fillOpacity="1"
+              fillOpacity="0.3" // Lighter interior as requested
               stroke="url(#mouthGradient)"
               strokeWidth="0.5"
               strokeLinecap="round"
