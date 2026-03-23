@@ -30,7 +30,6 @@ const BOTTOM_VIEW_MOTION_PROPS: MotionProps = {
   exit: 'hidden',
   transition: {
     duration: 0.3,
-    delay: 0.5,
     ease: 'easeOut',
   },
 };
@@ -215,7 +214,6 @@ export function AgentSessionView_01({
         </span>
       </button>
 
-      <Fade top className="absolute inset-x-4 top-0 z-10 h-40" />
       {/* transcript */}
 
       <div className="absolute top-0 bottom-[135px] flex w-full flex-col md:bottom-[170px]">
@@ -251,7 +249,7 @@ export function AgentSessionView_01({
       <motion.div
         {...BOTTOM_VIEW_MOTION_PROPS}
         animate={showControls ? "visible" : "hidden"}
-        className="absolute inset-x-3 bottom-0 z-50 md:inset-x-12"
+        className="absolute inset-x-3 bottom-0 z-100 md:inset-x-12"
       >
         {/* Pre-connect message */}
         {isPreConnectBufferEnabled && (

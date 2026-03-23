@@ -109,8 +109,8 @@ export function TileLayout({
   const videoHeight = agentVideoTrack?.publication.dimensions?.height ?? 0;
 
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center p-4">
-      <div className="relative w-full h-full flex items-center justify-center max-w-lg md:max-w-2xl">
+    <div className="absolute inset-x-0 inset-y-0 z-50 pointer-events-none">
+      <div className="relative mx-auto h-full max-w-2xl px-4 md:px-0 flex items-center justify-center">
         <div className={cn(tileViewClassNames.grid, "w-full")}>
           {/* Agent */}
           <div
