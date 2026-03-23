@@ -65,19 +65,20 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
       
       {/* Robot Face Overlay */}
       <div className="relative z-10 flex flex-col items-center justify-center w-full h-full">
-        {/* Mouth Container */}
-        <div className="mt-[20%] flex items-center justify-center w-40 h-10">
-            {/* The "Mouth" which opens */}
+        {/* Mouth Container - Adjusted position to align with video mouth */}
+        <div className="mt-[32%] flex items-center justify-center w-60 h-20">
+            {/* The "Mouth" with pointy sides and semi-transparent interior */}
             <div 
-                className="bg-black border border-cyan-400/50 rounded-lg transition-all duration-75 ease-out shadow-[0_0_20px_rgba(34,211,238,0.3)] flex items-center justify-center overflow-hidden"
+                className="bg-cyan-500/10 border-2 border-cyan-400/80 transition-all duration-75 ease-out shadow-[0_0_25px_rgba(34,211,238,0.4)] flex items-center justify-center overflow-hidden"
                 style={{ 
-                    width: isSpeaking ? `${50 + volume * 40}%` : '40%',
-                    height: isSpeaking ? `${4 + volume * 40}px` : '2px',
+                    width: isSpeaking ? `${50 + volume * 50}%` : '45%',
+                    height: isSpeaking ? `${8 + volume * 60}px` : '4px',
+                    borderRadius: '50% / 100%', // Pointy sides landscape oval effect
                     opacity: state === 'listening' ? 0.3 : 1
                 }}
             >
-                {/* Interior cyan line if needed, but they asked for black inside */}
-                <div className="w-full h-[1px] bg-cyan-400 opacity-50" />
+                {/* Subtle interior glow line */}
+                <div className="w-full h-[1px] bg-cyan-400/40 shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
             </div>
         </div>
       </div>
