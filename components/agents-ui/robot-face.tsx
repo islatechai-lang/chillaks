@@ -11,7 +11,8 @@ interface RobotFaceProps {
 }
 
 export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const idleVideoRef = useRef<HTMLVideoElement>(null);
+  const talkingVideoRef = useRef<HTMLVideoElement>(null);
   
   // Get audio volume for mouth animation
   const volumeBands = useMultibandTrackVolume(audioTrack, {
@@ -23,28 +24,43 @@ export function RobotFace({ state, audioTrack, className }: RobotFaceProps) {
   const volume = volumeBands[0] || 0;
   const isSpeaking = state === 'speaking';
 
-  // Sync video source with state
+  // Ensure both videos are playing and looping
   useEffect(() => {
-    if (videoRef.current) {
-      // Use talking2.mp4 as talking.mp4 is missing, or update if found
-      const src = isSpeaking ? '/talking2.mp4' : '/idle.mp4';
-      if (videoRef.current.getAttribute('src') !== src) {
-        videoRef.current.src = src;
-        videoRef.current.load();
-        videoRef.current.play().catch(console.error);
+    [idleVideoRef.current, talkingVideoRef.current].forEach(v => {
+      if (v) {
+        v.play().catch(console.error);
       }
-    }
-  }, [isSpeaking]);
+    });
+  }, []);
 
   return (
     <div className={cn("fixed inset-0 z-0 flex items-center justify-center overflow-hidden bg-black w-screen h-screen", className)}>
+      {/* Idle Video */}
       <video
-        ref={videoRef}
+        ref={idleVideoRef}
+        src="/idle.mp4"
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 h-full w-full object-cover"
+        className={cn(
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
+            isSpeaking ? "opacity-0" : "opacity-100"
+        )}
+      />
+
+      {/* Talking Video */}
+      <video
+        ref={talkingVideoRef}
+        src="/talking2.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className={cn(
+            "absolute inset-0 h-full w-full object-cover transition-opacity duration-500",
+            isSpeaking ? "opacity-100" : "opacity-0"
+        )}
       />
       
       {/* Robot Face Overlay */}

@@ -206,10 +206,10 @@ export function AgentSessionView_01({
     >
       <button
         onClick={() => setShowControls(!showControls)}
-        className="absolute top-4 left-4 z-50 rounded-full bg-background/50 p-2 text-foreground backdrop-blur-md transition-all hover:bg-background h-10 w-10 flex items-center justify-center border border-border"
+        className="absolute top-4 left-4 z-50 rounded-full bg-white p-2 text-black shadow-[0_0_15px_rgba(255,255,255,0.5)] transition-all hover:scale-110 active:scale-95 h-12 w-12 flex items-center justify-center border-2 border-cyan-400"
         aria-label="Toggle controls"
       >
-        <span className={cn("transition-transform duration-300", showControls ? "rotate-90" : "rotate-0")}>
+        <span className={cn("transition-transform duration-300 text-xl font-bold", showControls ? "rotate-90" : "rotate-0")}>
           {">"}
         </span>
       </button>
