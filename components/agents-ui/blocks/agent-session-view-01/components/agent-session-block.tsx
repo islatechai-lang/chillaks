@@ -248,8 +248,8 @@ export function AgentSessionView_01({
 
       {/* CHILLAKS Overlay Watermark */}
       <div className="absolute bottom-[2%] left-0 right-0 pointer-events-none select-none flex items-center justify-center z-[60] overflow-hidden px-4">
-        <h2 className="text-cyan-400 text-[15vw] font-black tracking-widest uppercase italic leading-none whitespace-nowrap drop-shadow-[0_0_30px_rgba(34,211,238,0.8)] filter brightness-125">
-          C H I L L A K S
+        <h2 className="text-cyan-400 text-[15vw] font-black tracking-[0.2em] uppercase italic leading-none whitespace-nowrap drop-shadow-[0_0_30px_rgba(34,211,238,0.8)] filter brightness-125">
+          CHILLAKS
         </h2>
       </div>
 
