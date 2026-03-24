@@ -36,8 +36,8 @@ export const WelcomeView = ({
           <div className="absolute inset-0 bg-cyan-500/20 blur-2xl rounded-full" />
         </div>
 
-        <h1 className="text-cyan-400 text-4xl md:text-6xl font-black tracking-tighter mb-2 uppercase italic drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
-          CHILLAKS
+        <h1 className="text-cyan-400 text-4xl md:text-6xl font-black mb-2 uppercase italic drop-shadow-[0_0_15px_rgba(34,211,238,0.5)]">
+          C H I L L A K S
         </h1>
         <p className="text-zinc-400 max-w-prose pt-1 leading-6 font-medium text-lg">
           Chat with CHILLAKS
