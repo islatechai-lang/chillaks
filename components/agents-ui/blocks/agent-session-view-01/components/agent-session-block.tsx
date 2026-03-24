@@ -269,16 +269,16 @@ export function AgentSessionView_01({
       />
 
       {/* AI Response Overlay */}
-      <div className="absolute bottom-[20%] left-0 right-0 pointer-events-none select-none flex items-center justify-center z-[70] px-4">
+      <div className="absolute bottom-[13%] left-0 right-0 pointer-events-none select-none flex items-center justify-center z-[70] px-4">
         <AnimatePresence mode="wait">
           {displayMessage && (
             <motion.div
               key={displayId}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="text-white text-2xl md:text-5xl font-bold text-center tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] max-w-5xl"
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.2 }}
+              className="text-cyan-400/90 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-center drop-shadow-[0_0_8px_rgba(34,211,238,0.4)] max-w-5xl whitespace-nowrap overflow-hidden text-ellipsis"
             >
               {displayMessage}
             </motion.div>
@@ -287,8 +287,8 @@ export function AgentSessionView_01({
       </div>
 
       {/* CHILLAKS Overlay Watermark */}
-      <div className="absolute bottom-[2%] left-0 right-0 pointer-events-none select-none flex items-center justify-center z-[60] overflow-hidden px-4">
-        <h2 className="text-cyan-400 text-[15vw] font-black tracking-[-0.05em] uppercase italic leading-none whitespace-nowrap drop-shadow-[0_0_30px_rgba(34,211,238,0.8)] filter brightness-125">
+      <div className="absolute bottom-[-1%] left-0 right-0 pointer-events-none select-none flex items-center justify-center z-[60] overflow-hidden px-4">
+        <h2 className="text-cyan-400 text-[15vw] font-black tracking-[-0.1em] uppercase italic leading-[0.8] whitespace-nowrap drop-shadow-[0_0_30px_rgba(34,211,238,0.8)] filter brightness-125">
           CHILLAKS
         </h2>
       </div>
