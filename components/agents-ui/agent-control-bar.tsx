@@ -2,7 +2,7 @@
 
 import { type ComponentProps, useEffect, useRef, useState } from 'react';
 import { Track } from 'livekit-client';
-import { Loader, MessageSquareTextIcon, SendHorizontal } from 'lucide-react';
+import { Eye, EyeOff, Loader, MessageSquareTextIcon, SendHorizontal } from 'lucide-react';
 import { type MotionProps, motion } from 'motion/react';
 import { useChat } from '@livekit/components-react';
 import { AgentDisconnectButton } from '@/components/agents-ui/agent-disconnect-button';
@@ -211,6 +211,10 @@ export interface AgentControlBarProps extends UseInputControlsProps {
   onDisconnect?: () => void;
   /** The callback for when the chat is opened or closed. */
   onIsChatOpenChange?: (open: boolean) => void;
+  /** Whether the camera preview is visible. */
+  showCameraPreview?: boolean;
+  /** Callback when the camera preview visibility changes. */
+  onShowCameraPreviewChange?: (show: boolean) => void;
   /** The callback for when a device error occurs. */
   onDeviceError?: (error: { source: Track.Source; error: Error }) => void;
 }
@@ -248,6 +252,8 @@ export function AgentControlBar({
   onDisconnect,
   onDeviceError,
   onIsChatOpenChange,
+  showCameraPreview,
+  onShowCameraPreviewChange,
   className,
   ...props
 }: AgentControlBarProps & ComponentProps<'div'>) {
@@ -351,6 +357,22 @@ export function AgentControlBar({
                 ]
               )}
             />
+          )}
+
+          {/* Toggle Camera/Screen Share Preview */}
+          {(visibleControls.camera || visibleControls.screenShare) && (cameraToggle.enabled || screenShareToggle.enabled) && (
+            <Toggle
+              variant={variant === 'outline' ? 'outline' : 'default'}
+              pressed={showCameraPreview}
+              aria-label="Toggle preview"
+              onPressedChange={onShowCameraPreviewChange}
+              className={agentTrackToggleVariants({
+                variant: variant === 'outline' ? 'outline' : 'default',
+                className: cn(variant === 'livekit' && [LK_TOGGLE_VARIANT_2, 'rounded-full']),
+              })}
+            >
+              {showCameraPreview ? <Eye size={20} /> : <EyeOff size={20} />}
+            </Toggle>
           )}
 
           {/* Toggle Screen Share */}

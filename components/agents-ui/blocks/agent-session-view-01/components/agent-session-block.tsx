@@ -180,6 +180,7 @@ export function AgentSessionView_01({
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const { state: agentState } = useAgent();
   const [showControls, setShowControls] = useState(false);
+  const [showCameraPreview, setShowCameraPreview] = useState(true);
 
   const controls: AgentControlBarControls = {
     leave: true,
@@ -244,6 +245,7 @@ export function AgentSessionView_01({
         audioVisualizerGridRowCount={audioVisualizerGridRowCount}
         audioVisualizerGridColumnCount={audioVisualizerGridColumnCount}
         audioVisualizerWaveLineWidth={audioVisualizerWaveLineWidth}
+        showCameraPreview={showCameraPreview}
       />
 
       {/* CHILLAKS Overlay Watermark */}
@@ -284,6 +286,8 @@ export function AgentSessionView_01({
             isConnected={session.isConnected}
             onDisconnect={session.end}
             onIsChatOpenChange={setChatOpen}
+            showCameraPreview={showCameraPreview}
+            onShowCameraPreviewChange={setShowCameraPreview}
           />
         </div>
       </motion.div>

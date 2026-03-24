@@ -80,6 +80,7 @@ interface TileLayoutProps {
   audioVisualizerRadialBarCount?: number;
   audioVisualizerRadialRadius?: number;
   audioVisualizerBarCount?: number;
+  showCameraPreview: boolean;
 }
 
 export function TileLayout({
@@ -93,6 +94,7 @@ export function TileLayout({
   audioVisualizerGridRowCount,
   audioVisualizerGridColumnCount,
   audioVisualizerWaveLineWidth,
+  showCameraPreview,
 }: TileLayoutProps) {
   const { videoTrack: agentVideoTrack, audioTrack: agentAudioTrack } = useVoiceAssistant();
   const { state: agentState } = useAgent();
@@ -192,7 +194,7 @@ export function TileLayout({
       {/* Camera & Screen Share - Floating Bottom Right */}
       <div className="absolute bottom-[110px] right-4 md:bottom-12 md:right-8 z-[100] pointer-events-auto">
         <AnimatePresence>
-          {((cameraTrack && isCameraEnabled) || (screenShareTrack && isScreenShareEnabled)) && (
+          {showCameraPreview && ((cameraTrack && isCameraEnabled) || (screenShareTrack && isScreenShareEnabled)) && (
             <motion.div
               key="camera"
               layout="position"
