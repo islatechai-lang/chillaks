@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, type MotionProps, motion } from 'motion/react';
-import { useAgent, useSessionContext, useSessionMessages } from '@livekit/components-react';
+import { useAgent, useSessionContext, useSessionMessages, useTranscriptions } from '@livekit/components-react';
 import { AgentChatTranscript } from '@/components/agents-ui/agent-chat-transcript';
 import {
   AgentControlBar,
@@ -198,6 +198,28 @@ export function AgentSessionView_01({
     }
   }, [messages]);
 
+  const transcriptions = useTranscriptions();
+  const latestTranscription = transcriptions.at(-1);
+  const latestAgentMessage = messages
+    .slice()
+    .reverse()
+    .find((m) => m.from?.isLocal === false);
+
+  const displayMessage = latestTranscription?.text || latestAgentMessage?.message;
+  const displayId = latestAgentMessage?.id || (latestTranscription ? `trans-${latestTranscription.text.slice(0, 10)}` : undefined);
+
+  // Merge transcriptions into messages for the transcript view if they aren't already there
+  const allMessages = useMemo(() => {
+    const transcriptionMessages = transcriptions.map((t, i) => ({
+      id: `trans-${i}-${t.text.slice(0, 10)}`,
+      message: t.text,
+      timestamp: Date.now(), // Fallback since TextStreamData seems to lack timestamp in this version
+      from: { isLocal: false } as any, // Most transcriptions are from the agent
+    }));
+
+    return [...messages, ...transcriptionMessages].sort((a, b) => a.timestamp - b.timestamp) as any[];
+  }, [messages, transcriptions]);
+
   return (
     <section
       ref={ref}
@@ -225,7 +247,7 @@ export function AgentSessionView_01({
             >
               <AgentChatTranscript
                 agentState={agentState}
-                messages={messages}
+                messages={allMessages}
                 className="mx-auto w-full max-w-2xl [&_.is-user>div]:rounded-[22px] [&>div>div]:px-4 [&>div>div]:pt-40 md:[&>div>div]:px-6"
               />
             </motion.div>
@@ -245,6 +267,24 @@ export function AgentSessionView_01({
         audioVisualizerGridColumnCount={audioVisualizerGridColumnCount}
         audioVisualizerWaveLineWidth={audioVisualizerWaveLineWidth}
       />
+
+      {/* AI Response Overlay */}
+      <div className="absolute bottom-[20%] left-0 right-0 pointer-events-none select-none flex items-center justify-center z-[70] px-4">
+        <AnimatePresence mode="wait">
+          {displayMessage && (
+            <motion.div
+              key={displayId}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="text-white text-2xl md:text-5xl font-bold text-center tracking-tight drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)] max-w-5xl"
+            >
+              {displayMessage}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* CHILLAKS Overlay Watermark */}
       <div className="absolute bottom-[2%] left-0 right-0 pointer-events-none select-none flex items-center justify-center z-[60] overflow-hidden px-4">
